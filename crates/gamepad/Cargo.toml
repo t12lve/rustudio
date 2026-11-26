@@ -1,0 +1,13 @@
+[package]
+name = "rustudio-gamepad"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Manettes XInput (état, batterie, vibration) et simulateur"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.59", features = ["Win32_Foundation", "Win32_UI_Input_XboxController"] }

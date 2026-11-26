@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
-members = ["crates/core", "crates/goxlr", "crates/attack-shark", "crates/cooler-master", "crates/engine", "crates/app", "crates/setup", "crates/windows-desktop"]
-default-members = ["crates/core", "crates/goxlr", "crates/attack-shark", "crates/cooler-master", "crates/engine", "crates/windows-desktop"]
+members = ["crates/core", "crates/goxlr", "crates/attack-shark", "crates/cooler-master", "crates/engine", "crates/app", "crates/setup", "crates/windows-desktop", "crates/goxlr-ex", "crates/logitech-g", "crates/gamepad", "crates/netcard", "crates/roccat-vulcan", "vendor/goxlr-types", "vendor/goxlr-ipc"]
+default-members = ["crates/core", "crates/goxlr", "crates/attack-shark", "crates/cooler-master", "crates/engine", "crates/windows-desktop", "crates/logitech-g", "crates/gamepad", "crates/netcard", "crates/roccat-vulcan"]
 
 [workspace.package]
 version = "6.7.0"
@@ -18,6 +18,10 @@ rustudio-core = { path = "crates/core" }
 rustudio-goxlr = { path = "crates/goxlr" }
 rustudio-attack-shark = { path = "crates/attack-shark" }
 rustudio-cooler-master = { path = "crates/cooler-master" }
+rustudio-logitech-g = { path = "crates/logitech-g" }
+rustudio-gamepad = { path = "crates/gamepad" }
+rustudio-netcard = { path = "crates/netcard" }
+rustudio-roccat-vulcan = { path = "crates/roccat-vulcan" }
 
 # Développement en direct sur le PC (private/live-pc.mjs) : dépendances optimisées une fois, puis seule l'appli
 # se recompile, sans optimisation et en incrémental : environ 3 s, 5 s jusqu'à la fenêtre relancée.

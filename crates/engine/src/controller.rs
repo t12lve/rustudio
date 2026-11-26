@@ -364,6 +364,10 @@ pub struct Ctl {
     pub updater: crate::updater::Updater,
     pub mouse: crate::mouse::MouseHub,
     pub keyboard: crate::keyboard::KeyboardHub,
+    pub logitech: crate::logitech::LogitechHub,
+    pub gamepad: crate::gamepad::GamepadHub,
+    pub netcard: crate::netcard::NetcardHub,
+    pub roccat: crate::roccat::RoccatHub,
     pub eqapo: crate::eqapo::EqApo,
     pub sim: Option<Sim>,
     pub boot_id: String,
@@ -434,6 +438,10 @@ impl Ctl {
             updater: crate::updater::Updater::new(&cfg),
             mouse: crate::mouse::MouseHub::new(simulated),
             keyboard: crate::keyboard::KeyboardHub::new(simulated),
+            logitech: crate::logitech::LogitechHub::new(simulated),
+            gamepad: crate::gamepad::GamepadHub::new(simulated),
+            netcard: crate::netcard::NetcardHub::new(simulated),
+            roccat: crate::roccat::RoccatHub::new(simulated),
             eqapo: crate::eqapo::EqApo::new(&cfg, simulated),
             cfg,
             inner: Mutex::new(inner),
@@ -483,6 +491,7 @@ impl Ctl {
     }
     pub fn version(&self) -> u64 {
         self.lock().version + self.updater.changes() + self.eqapo.changes() + self.mouse.changes() + self.keyboard.changes()
+            + self.logitech.changes() + self.gamepad.changes() + self.netcard.changes() + self.roccat.changes()
     }
 
     fn usb_scan(&self) -> Option<String> {

@@ -15,6 +15,10 @@ pub mod log;
 pub mod modules;
 pub mod mouse;
 pub mod keyboard;
+pub mod logitech;
+pub mod gamepad;
+pub mod netcard;
+pub mod roccat;
 mod mixer;
 pub mod net;
 #[cfg(windows)]
@@ -85,6 +89,10 @@ pub fn run_engine(cfg: config::Config) -> i32 {
     };
     ctl.mouse.start();
     ctl.keyboard.start();
+    ctl.logitech.start();
+    ctl.gamepad.start();
+    ctl.netcard.start();
+    ctl.roccat.start();
     let c = ctl.clone();
     spawn("usb", Box::new(move || c.device_loop(None)));
     let c = ctl.clone();

@@ -52,6 +52,10 @@ pub enum Page {
     KeyboardInfo,
     KeyboardMacros,
     WindowsAudio,
+    LogiMouse,
+    RoccatKbd,
+    Gamepad,
+    Netcards,
     Catalogue,
     Versions,
     Help,
@@ -73,6 +77,10 @@ pub(crate) enum Space {
     GoXlr,
     Mouse,
     Keyboard,
+    LogiMouse,
+    RoccatKbd,
+    Gamepad,
+    Netcards,
 }
 
 impl Page {
@@ -97,6 +105,10 @@ impl Page {
             "keyboard-shortcuts" => Page::KeyboardShortcuts,
             "keyboard-info" => Page::KeyboardInfo,
             "keyboard-macros" => Page::KeyboardMacros,
+            "logi-mouse" => Page::LogiMouse,
+            "roccat-keyboard" => Page::RoccatKbd,
+            "gamepad" => Page::Gamepad,
+            "netcards" => Page::Netcards,
             "mic" => Page::Go(Section::Microphone),
             "headphones" => Page::Go(Section::Headphones),
             "routing" => Page::Go(Section::Routing),
@@ -108,11 +120,11 @@ impl Page {
     }
     /// Nom de la page pour `--page`, l'inverse de `from_name`.
     pub fn name(self) -> Option<&'static str> {
-        const NAMES: [&str; 24] = [
+        const NAMES: [&str; 28] = [
             "devices", "profiles", "modules", "versions", "help", "settings", "audio", "mixer", "mouse",
             "mouse-sensitivity", "mouse-sensor", "mouse-power", "keyboard", "keyboard-settings", "keyboard-paint",
             "keyboard-shortcuts", "keyboard-info", "keyboard-macros", "mic", "headphones", "routing", "lighting",
-            "scenes", "diagnostic",
+            "scenes", "diagnostic", "logi-mouse", "roccat-keyboard", "gamepad", "netcards",
         ];
         NAMES.into_iter().find(|n| Self::from_name(n) == Some(self))
     }
@@ -121,6 +133,10 @@ impl Page {
             Page::Mixer | Page::Go(_) => Some(Space::GoXlr),
             Page::Mouse | Page::MouseSensitivity | Page::MouseSensor | Page::MousePower => Some(Space::Mouse),
             Page::Keyboard | Page::KeyboardSettings | Page::KeyboardPaint | Page::KeyboardShortcuts | Page::KeyboardInfo | Page::KeyboardMacros => Some(Space::Keyboard),
+            Page::LogiMouse => Some(Space::LogiMouse),
+            Page::RoccatKbd => Some(Space::RoccatKbd),
+            Page::Gamepad => Some(Space::Gamepad),
+            Page::Netcards => Some(Space::Netcards),
             _ => None,
         }
     }
@@ -146,6 +162,10 @@ impl Page {
             Page::KeyboardShortcuts => "Raccourcis et mode",
             Page::KeyboardInfo => "Ton MK770",
             Page::KeyboardMacros => "Macros",
+            Page::LogiMouse => "Ma souris Logitech",
+            Page::RoccatKbd => "Mon clavier ROCCAT",
+            Page::Gamepad => "Ma manette",
+            Page::Netcards => "Ma carte réseau",
             Page::Go(s) => s.label(),
         }
     }
@@ -169,6 +189,10 @@ impl Page {
             Page::KeyboardShortcuts => "Raccourcis Fn et aide pour le mode Windows ou macOS.",
             Page::KeyboardInfo => "Connexion, firmware et caractéristiques du clavier.",
             Page::KeyboardMacros => "Expérimental · Crée tes séquences de touches et enregistre-les dans ton clavier.",
+            Page::LogiMouse => "DPI, fréquence et batterie de ta souris Logitech (récepteur LIGHTSPEED).",
+            Page::RoccatKbd => "Effets lumineux du clavier ROCCAT Vulcan 120 AIMO.",
+            Page::Gamepad => "État des manettes XInput et test de vibration.",
+            Page::Netcards => "État de tes cartes réseau et actions activer, désactiver, renouveler.",
             Page::Go(Section::Microphone) => "Détection, gain et traitement de ta voix.",
             Page::Go(Section::Headphones) => "Égaliseur, correction et styles de ton casque.",
             Page::Go(Section::Routing) => "Choisis quelles sorties reçoivent chaque entrée.",
@@ -204,6 +228,10 @@ fn space_pages(space: Space) -> &'static [(Page, Icon, &'static str)] {
             (Page::KeyboardShortcuts, Icon::Help, "Raccourcis et mode"),
             (Page::KeyboardInfo, Icon::Keyboard, "Informations"),
         ],
+        Space::LogiMouse => &[(Page::LogiMouse, Icon::Mouse, "Ma souris Logitech")],
+        Space::RoccatKbd => &[(Page::RoccatKbd, Icon::Keyboard, "Mon clavier ROCCAT")],
+        Space::Gamepad => &[(Page::Gamepad, Icon::Game, "Ma manette")],
+        Space::Netcards => &[(Page::Netcards, Icon::External, "Ma carte réseau")],
     }
 }
 
@@ -212,6 +240,10 @@ fn module_icon(id: &str) -> Icon {
         "goxlr-mini" => Icon::Sliders,
         "attack-shark-r5-ultra" => Icon::Mouse,
         "cooler-master-mk770" => Icon::Keyboard,
+        "logitech-g" => Icon::Mouse,
+        "roccat-vulcan-120-aimo" => Icon::Keyboard,
+        "gamepad-xinput" => Icon::Game,
+        "netcard" => Icon::External,
         _ => Icon::Grid,
     }
 }
@@ -220,6 +252,10 @@ fn module_page(id: &str) -> Option<Page> {
         "goxlr-mini" => Some(Page::Mixer),
         "attack-shark-r5-ultra" => Some(Page::Mouse),
         "cooler-master-mk770" => Some(Page::Keyboard),
+        "logitech-g" => Some(Page::LogiMouse),
+        "roccat-vulcan-120-aimo" => Some(Page::RoccatKbd),
+        "gamepad-xinput" => Some(Page::Gamepad),
+        "netcard" => Some(Page::Netcards),
         _ => None,
     }
 }
@@ -928,6 +964,10 @@ impl Mixer {
             Some(Space::GoXlr) => format!("GOXLR MINI · {}", suffix("goxlr-mini").to_uppercase()),
             Some(Space::Mouse) => format!("R5 ULTRA · {}", suffix("attack-shark-r5-ultra").to_uppercase()),
             Some(Space::Keyboard) => format!("MK770 · {}", suffix("cooler-master-mk770").to_uppercase()),
+            Some(Space::LogiMouse) => format!("LOGITECH G · {}", suffix("logitech-g").to_uppercase()),
+            Some(Space::RoccatKbd) => format!("ROCCAT VULCAN · {}", suffix("roccat-vulcan-120-aimo").to_uppercase()),
+            Some(Space::Gamepad) => format!("MANETTE XINPUT · {}", suffix("gamepad-xinput").to_uppercase()),
+            Some(Space::Netcards) => format!("RÉSEAU · {}", suffix("netcard").to_uppercase()),
             None if matches!(self.page, Page::Devices | Page::Profiles) => "TON ESPACE PERSONNEL".into(),
             None if self.page == Page::WindowsAudio => "CE PC".into(),
             None => "RUSTUDIO".into(),
@@ -1005,6 +1045,10 @@ impl Mixer {
             Some(Space::GoXlr) => self.module("goxlr-mini"),
             Some(Space::Mouse) => self.module("attack-shark-r5-ultra"),
             Some(Space::Keyboard) => self.module("cooler-master-mk770"),
+            Some(Space::LogiMouse) => self.module("logitech-g"),
+            Some(Space::RoccatKbd) => self.module("roccat-vulcan-120-aimo"),
+            Some(Space::Gamepad) => self.module("gamepad-xinput"),
+            Some(Space::Netcards) => self.module("netcard"),
             None => None,
         };
         let back = self.history.last().copied().map(|previous| {
@@ -1122,6 +1166,7 @@ impl Mixer {
             Page::Keyboard | Page::KeyboardSettings | Page::KeyboardPaint | Page::KeyboardShortcuts | Page::KeyboardInfo => self.keyboard_view(page_width(window), cx).into_any_element(),
             Page::KeyboardMacros => self.macros_view(window, cx).into_any_element(),
             Page::WindowsAudio => self.win_audio(window,cx).into_any_element(),
+            Page::LogiMouse | Page::RoccatKbd | Page::Gamepad | Page::Netcards => self.extra_view(self.page, window, cx).into_any_element(),
             Page::Catalogue | Page::Versions | Page::Help | Page::Settings => self.library_view(self.page, window, cx).into_any_element(),
             Page::Go(section) => self.go_controls(section, page_width(window), cx).into_any_element(),
         };

@@ -1,0 +1,628 @@
+[
+  {
+    "id": "reverb",
+    "name": "Réverbération",
+    "description": "Place la voix dans un espace : petite pièce ou grande salle.",
+    "styleCommand": "SetReverbStyle",
+    "styles": [
+      [
+        "Library",
+        "Bibliothèque"
+      ],
+      [
+        "DarkBloom",
+        "Sombre"
+      ],
+      [
+        "MusicClub",
+        "Club"
+      ],
+      [
+        "RealPlate",
+        "Plaque"
+      ],
+      [
+        "Chapel",
+        "Chapelle"
+      ],
+      [
+        "HockeyArena",
+        "Arène"
+      ]
+    ],
+    "params": [
+      {
+        "field": "amount",
+        "label": "Présence",
+        "command": "SetReverbAmount",
+        "min": 0,
+        "max": 100,
+        "value": 12,
+        "unit": "%",
+        "advanced": false
+      },
+      {
+        "field": "decay",
+        "label": "Durée",
+        "command": "SetReverbDecay",
+        "min": 100,
+        "max": 10000,
+        "value": 1200,
+        "unit": "ms",
+        "advanced": false
+      },
+      {
+        "field": "pre_delay",
+        "label": "Délai initial",
+        "command": "SetReverbPreDelay",
+        "min": 0,
+        "max": 100,
+        "value": 15,
+        "unit": "ms",
+        "advanced": true
+      },
+      {
+        "field": "early_level",
+        "label": "Premières réflexions",
+        "command": "SetReverbEarlyLevel",
+        "min": -25,
+        "max": 0,
+        "value": -8,
+        "unit": "dB",
+        "advanced": true
+      },
+      {
+        "field": "tail_level",
+        "label": "Queue de réverbération",
+        "command": "SetReverbTailLevel",
+        "min": -25,
+        "max": 0,
+        "value": -12,
+        "unit": "dB",
+        "advanced": true
+      },
+      {
+        "field": "lo_colour",
+        "label": "Couleur grave",
+        "command": "SetReverbLowColour",
+        "min": -50,
+        "max": 50,
+        "value": 0,
+        "unit": "",
+        "advanced": true
+      },
+      {
+        "field": "hi_colour",
+        "label": "Couleur aiguë",
+        "command": "SetReverbHighColour",
+        "min": -50,
+        "max": 50,
+        "value": 0,
+        "unit": "",
+        "advanced": true
+      },
+      {
+        "field": "hi_factor",
+        "label": "Facteur aigu",
+        "command": "SetReverbHighFactor",
+        "min": -25,
+        "max": 25,
+        "value": 0,
+        "unit": "",
+        "advanced": true
+      },
+      {
+        "field": "diffuse",
+        "label": "Diffusion",
+        "command": "SetReverbDiffuse",
+        "min": -50,
+        "max": 50,
+        "value": 0,
+        "unit": "",
+        "advanced": true
+      },
+      {
+        "field": "mod_speed",
+        "label": "Vitesse de modulation",
+        "command": "SetReverbModSpeed",
+        "min": -25,
+        "max": 25,
+        "value": 0,
+        "unit": "",
+        "advanced": true
+      },
+      {
+        "field": "mod_depth",
+        "label": "Profondeur de modulation",
+        "command": "SetReverbModDepth",
+        "min": -25,
+        "max": 25,
+        "value": 0,
+        "unit": "",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "echo",
+    "name": "Écho",
+    "description": "Répète la voix à intervalles réguliers. La réinjection prolonge ces répétitions.",
+    "styleCommand": "SetEchoStyle",
+    "styles": [
+      [
+        "Quarter",
+        "Noire"
+      ],
+      [
+        "Eighth",
+        "Croche"
+      ],
+      [
+        "Triplet",
+        "Triolet"
+      ],
+      [
+        "PingPong",
+        "Ping-pong"
+      ],
+      [
+        "ClassicSlap",
+        "Slap"
+      ],
+      [
+        "MultiTap",
+        "Multi-tap"
+      ]
+    ],
+    "params": [
+      {
+        "field": "amount",
+        "label": "Présence",
+        "command": "SetEchoAmount",
+        "min": 0,
+        "max": 100,
+        "value": 0,
+        "unit": "%",
+        "advanced": false
+      },
+      {
+        "field": "feedback",
+        "label": "Réinjection",
+        "command": "SetEchoFeedback",
+        "min": 0,
+        "max": 100,
+        "value": 25,
+        "unit": "%",
+        "advanced": false
+      },
+      {
+        "field": "tempo",
+        "label": "Tempo",
+        "command": "SetEchoTempo",
+        "min": 45,
+        "max": 300,
+        "value": 120,
+        "unit": "BPM",
+        "advanced": true
+      },
+      {
+        "field": "delay_left",
+        "label": "Délai gauche",
+        "command": "SetEchoDelayLeft",
+        "min": 0,
+        "max": 2500,
+        "value": 180,
+        "unit": "ms",
+        "advanced": true
+      },
+      {
+        "field": "delay_right",
+        "label": "Délai droit",
+        "command": "SetEchoDelayRight",
+        "min": 0,
+        "max": 2500,
+        "value": 240,
+        "unit": "ms",
+        "advanced": true
+      },
+      {
+        "field": "feedback_left",
+        "label": "Réinjection gauche",
+        "command": "SetEchoFeedbackLeft",
+        "min": 0,
+        "max": 100,
+        "value": 15,
+        "unit": "%",
+        "advanced": true
+      },
+      {
+        "field": "feedback_right",
+        "label": "Réinjection droite",
+        "command": "SetEchoFeedbackRight",
+        "min": 0,
+        "max": 100,
+        "value": 15,
+        "unit": "%",
+        "advanced": true
+      },
+      {
+        "field": "feedback_xfb_l_to_r",
+        "label": "Renvoi gauche → droite",
+        "command": "SetEchoFeedbackXFBLtoR",
+        "min": 0,
+        "max": 100,
+        "value": 15,
+        "unit": "%",
+        "advanced": true
+      },
+      {
+        "field": "feedback_xfb_r_to_l",
+        "label": "Renvoi droite → gauche",
+        "command": "SetEchoFeedbackXFBRtoL",
+        "min": 0,
+        "max": 100,
+        "value": 15,
+        "unit": "%",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "pitch",
+    "name": "Hauteur",
+    "description": "Transpose la voix vers le grave ou l’aigu. Zéro conserve sa hauteur.",
+    "styleCommand": "SetPitchStyle",
+    "styles": [
+      [
+        "Narrow",
+        "Étroit"
+      ],
+      [
+        "Wide",
+        "Large"
+      ]
+    ],
+    "params": [
+      {
+        "field": "amount",
+        "label": "Transposition",
+        "command": "SetPitchAmount",
+        "min": -12,
+        "max": 12,
+        "value": 0,
+        "unit": "demi-tons",
+        "advanced": false
+      },
+      {
+        "field": "character",
+        "label": "Caractère",
+        "command": "SetPitchCharacter",
+        "min": 0,
+        "max": 100,
+        "value": 50,
+        "unit": "%",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "gender",
+    "name": "Timbre",
+    "description": "Déplace les résonances de la voix pour changer son caractère, indépendamment de la hauteur.",
+    "styleCommand": "SetGenderStyle",
+    "styles": [
+      [
+        "Narrow",
+        "Étroit"
+      ],
+      [
+        "Medium",
+        "Moyen"
+      ],
+      [
+        "Wide",
+        "Large"
+      ]
+    ],
+    "params": [
+      {
+        "field": "amount",
+        "label": "Caractère",
+        "command": "SetGenderAmount",
+        "min": -12,
+        "max": 12,
+        "value": 0,
+        "unit": "",
+        "advanced": false
+      }
+    ]
+  },
+  {
+    "id": "megaphone",
+    "name": "Mégaphone",
+    "toggle": "SetMegaphoneEnabled",
+    "description": "Donne une texture de radio, téléphone ou haut-parleur à la voix.",
+    "styleCommand": "SetMegaphoneStyle",
+    "styles": [
+      [
+        "Megaphone",
+        "Mégaphone"
+      ],
+      [
+        "Radio",
+        "Radio"
+      ],
+      [
+        "OnThePhone",
+        "Téléphone"
+      ],
+      [
+        "Overdrive",
+        "Overdrive"
+      ],
+      [
+        "BuzzCutt",
+        "BuzzCutt"
+      ],
+      [
+        "Tweed",
+        "Tweed"
+      ]
+    ],
+    "params": [
+      {
+        "field": "amount",
+        "label": "Intensité",
+        "command": "SetMegaphoneAmount",
+        "min": 0,
+        "max": 100,
+        "value": 45,
+        "unit": "%",
+        "advanced": false
+      },
+      {
+        "field": "post_gain",
+        "label": "Gain de sortie",
+        "command": "SetMegaphonePostGain",
+        "min": -20,
+        "max": 20,
+        "value": 0,
+        "unit": "dB",
+        "advanced": true
+      }
+    ]
+  },
+  {
+    "id": "robot",
+    "name": "Robot",
+    "toggle": "SetRobotEnabled",
+    "description": "Transforme la voix en texture synthétique à trois bandes.",
+    "styleCommand": "SetRobotStyle",
+    "styles": [
+      [
+        "Robot1",
+        "Robot 1"
+      ],
+      [
+        "Robot2",
+        "Robot 2"
+      ],
+      [
+        "Robot3",
+        "Robot 3"
+      ]
+    ],
+    "params": [
+      {
+        "field": "dry_mix",
+        "label": "Voix d’origine",
+        "command": "SetRobotDryMix",
+        "min": -36,
+        "max": 0,
+        "value": -12,
+        "unit": "dB",
+        "advanced": false
+      },
+      {
+        "field": "waveform",
+        "label": "Forme d’onde",
+        "command": "SetRobotWaveform",
+        "min": 0,
+        "max": 2,
+        "value": 0,
+        "unit": "",
+        "advanced": false
+      },
+      {
+        "field": "pulse_width",
+        "label": "Largeur d’impulsion",
+        "command": "SetRobotPulseWidth",
+        "min": 0,
+        "max": 100,
+        "value": 50,
+        "unit": "%",
+        "advanced": true
+      },
+      {
+        "field": "threshold",
+        "label": "Seuil",
+        "command": "SetRobotThreshold",
+        "min": -36,
+        "max": 0,
+        "value": -24,
+        "unit": "dB",
+        "advanced": true
+      },
+      {
+        "field": "low_gain",
+        "label": "Graves · gain",
+        "command": "SetRobotGain",
+        "min": -12,
+        "max": 12,
+        "value": 0,
+        "unit": "dB",
+        "advanced": true,
+        "prefix": [
+          "Low"
+        ]
+      },
+      {
+        "field": "low_freq",
+        "label": "Graves · fréquence",
+        "command": "SetRobotFreq",
+        "min": 0,
+        "max": 88,
+        "value": 7,
+        "unit": "",
+        "advanced": true,
+        "prefix": [
+          "Low"
+        ]
+      },
+      {
+        "field": "low_width",
+        "label": "Graves · largeur",
+        "command": "SetRobotWidth",
+        "min": 0,
+        "max": 32,
+        "value": 10,
+        "unit": "",
+        "advanced": true,
+        "prefix": [
+          "Low"
+        ]
+      },
+      {
+        "field": "mid_gain",
+        "label": "Médiums · gain",
+        "command": "SetRobotGain",
+        "min": -12,
+        "max": 12,
+        "value": 0,
+        "unit": "dB",
+        "advanced": true,
+        "prefix": [
+          "Medium"
+        ]
+      },
+      {
+        "field": "mid_freq",
+        "label": "Médiums · fréquence",
+        "command": "SetRobotFreq",
+        "min": 86,
+        "max": 184,
+        "value": 98,
+        "unit": "",
+        "advanced": true,
+        "prefix": [
+          "Medium"
+        ]
+      },
+      {
+        "field": "mid_width",
+        "label": "Médiums · largeur",
+        "command": "SetRobotWidth",
+        "min": 0,
+        "max": 32,
+        "value": 10,
+        "unit": "",
+        "advanced": true,
+        "prefix": [
+          "Medium"
+        ]
+      },
+      {
+        "field": "high_gain",
+        "label": "Aigus · gain",
+        "command": "SetRobotGain",
+        "min": -12,
+        "max": 12,
+        "value": 0,
+        "unit": "dB",
+        "advanced": true,
+        "prefix": [
+          "High"
+        ]
+      },
+      {
+        "field": "high_freq",
+        "label": "Aigus · fréquence",
+        "command": "SetRobotFreq",
+        "min": 182,
+        "max": 240,
+        "value": 192,
+        "unit": "",
+        "advanced": true,
+        "prefix": [
+          "High"
+        ]
+      },
+      {
+        "field": "high_width",
+        "label": "Aigus · largeur",
+        "command": "SetRobotWidth",
+        "min": 0,
+        "max": 32,
+        "value": 10,
+        "unit": "",
+        "advanced": true,
+        "prefix": [
+          "High"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "hard_tune",
+    "name": "HardTune",
+    "toggle": "SetHardTuneEnabled",
+    "description": "Resserre les notes de la voix autour d’une référence musicale.",
+    "styleCommand": "SetHardTuneStyle",
+    "styles": [
+      [
+        "Natural",
+        "Naturel"
+      ],
+      [
+        "Medium",
+        "Moyen"
+      ],
+      [
+        "Hard",
+        "Marqué"
+      ]
+    ],
+    "params": [
+      {
+        "field": "amount",
+        "label": "Intensité",
+        "command": "SetHardTuneAmount",
+        "min": 0,
+        "max": 100,
+        "value": 65,
+        "unit": "%",
+        "advanced": false
+      },
+      {
+        "field": "rate",
+        "label": "Vitesse",
+        "command": "SetHardTuneRate",
+        "min": 0,
+        "max": 100,
+        "value": 60,
+        "unit": "%",
+        "advanced": false
+      },
+      {
+        "field": "window",
+        "label": "Fenêtre",
+        "command": "SetHardTuneWindow",
+        "min": 0,
+        "max": 600,
+        "value": 100,
+        "unit": "cents",
+        "advanced": true
+      }
+    ]
+  }
+]
