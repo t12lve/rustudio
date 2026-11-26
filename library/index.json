@@ -95,8 +95,8 @@
         "Effets lumineux",
         "Luminosité",
         "Vitesse",
-          "Couleur par touche",
-          "Macros embarquées (validation matérielle en cours)"
+        "Couleur par touche",
+        "Macros embarquées (validation matérielle en cours)"
       ],
       "builtin": true,
       "author": "samirmedani",
@@ -139,7 +139,7 @@
         "Nom de l’appareil"
       ],
       "author": "t12lve",
-      "review_pr": null
+      "review_pr": 1
     },
     {
       "id": "roccat-vulcan-120-aimo",
@@ -163,7 +163,7 @@
         "Couleur"
       ],
       "author": "t12lve",
-      "review_pr": null
+      "review_pr": 1
     },
     {
       "id": "gamepad-xinput",
@@ -181,7 +181,7 @@
         "Vibration"
       ],
       "author": "t12lve",
-      "review_pr": null
+      "review_pr": 1
     },
     {
       "id": "netcard",
@@ -200,7 +200,7 @@
         "Renouveler DHCP"
       ],
       "author": "t12lve",
-      "review_pr": null
+      "review_pr": 1
     }
   ]
 }
