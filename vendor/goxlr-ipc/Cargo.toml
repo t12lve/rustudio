@@ -1,0 +1,13 @@
+[package]
+name = "goxlr-ipc"
+version = "1.2.4"
+edition = "2024"
+license = "MIT"
+description = "Sous-ensemble IPC GoXLR (DaemonRequest/DaemonResponse/DaemonStatus, commandes) vendored depuis GoXLR-Utility, sans les clients async"
+
+[dependencies]
+goxlr-types = { path = "../goxlr-types", features = ["serde"] }
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+json-patch = "4.1.0"
+enum-map = { version = "2.7.3", features = ["serde"] }

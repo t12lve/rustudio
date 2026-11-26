@@ -128,7 +128,43 @@ pub const MK770: ModuleDescriptor = ModuleDescriptor {
     actions: &["settings", "refresh", "macros", "macro-assign", "macro-remove"],
 };
 
-const INSTALLED: &[ModuleDescriptor] = &[GOXLR_MINI, R5_ULTRA, MK770];
+pub const LOGITECH_G: ModuleDescriptor = ModuleDescriptor {
+    id: "logitech-g", name: "Souris Logitech G", vendor: "Logitech", kind: "mouse",
+    origin: ModuleOrigin::Community, author: "t12lve", source: "crates/logitech-g", review_pr: None,
+    summary: "DPI, fréquence d’interrogation, batterie et nom de la souris via le récepteur LIGHTSPEED/Unifying (HID++). Validé sur simulateur.",
+    capabilities: &["dpi", "polling", "battery", "name"],
+    pages: &[ModulePage { id: "logi-mouse", label: "Ma souris Logitech", icon: "mouse" }],
+    actions: &["setting", "settings", "refresh"],
+};
+
+pub const GAMEPAD_XINPUT: ModuleDescriptor = ModuleDescriptor {
+    id: "gamepad-xinput", name: "Manette (XInput)", vendor: "Microsoft", kind: "other",
+    origin: ModuleOrigin::Community, author: "t12lve", source: "crates/gamepad", review_pr: None,
+    summary: "État des manettes XInput : connexion, batterie, boutons en direct et test de vibration. Validé sur simulateur.",
+    capabilities: &["state", "battery", "vibration"],
+    pages: &[ModulePage { id: "gamepad", label: "Ma manette", icon: "game" }],
+    actions: &["vibrate", "refresh"],
+};
+
+pub const NETCARD: ModuleDescriptor = ModuleDescriptor {
+    id: "netcard", name: "Cartes réseau", vendor: "Windows", kind: "other",
+    origin: ModuleOrigin::Community, author: "t12lve", source: "crates/netcard", review_pr: None,
+    summary: "État des cartes réseau (MAC, IP, DNS, DHCP, vitesse, état) et actions activer/désactiver/renouveler. Validé sur simulateur.",
+    capabilities: &["list", "enable", "disable", "renew"],
+    pages: &[ModulePage { id: "netcards", label: "Ma carte réseau", icon: "link" }],
+    actions: &["enable", "disable", "renew", "refresh"],
+};
+
+pub const ROCCAT_VULCAN: ModuleDescriptor = ModuleDescriptor {
+    id: "roccat-vulcan-120-aimo", name: "Vulcan 120 AIMO", vendor: "ROCCAT", kind: "keyboard",
+    origin: ModuleOrigin::Community, author: "t12lve", source: "crates/roccat-vulcan", review_pr: None,
+    summary: "Éclairage du clavier ROCCAT Vulcan 120 AIMO (USB 1E7D:3098) : effet, luminosité, vitesse, couleur. Validé sur simulateur.",
+    capabilities: &["lighting-effects", "brightness"],
+    pages: &[ModulePage { id: "roccat-keyboard", label: "Mon clavier ROCCAT", icon: "keyboard" }],
+    actions: &["setting", "settings", "refresh"],
+};
+
+const INSTALLED: &[ModuleDescriptor] = &[GOXLR_MINI, R5_ULTRA, MK770, LOGITECH_G, GAMEPAD_XINPUT, NETCARD, ROCCAT_VULCAN];
 
 pub fn installed() -> &'static [ModuleDescriptor] {
     INSTALLED

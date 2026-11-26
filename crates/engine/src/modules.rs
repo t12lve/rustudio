@@ -45,8 +45,16 @@ pub(crate) fn goxlr_firmware_kind(g: &Inner, info: &DevInfo) -> Option<FirmwareK
 }
 
 impl Ctl {
-    pub(crate) fn module_devices_locked(&self, g: &Inner, info: &DevInfo) -> [ModuleRuntime; 3] {
-        [goxlr_runtime(self.health_status(g), g, self.simulated(), info), self.mouse.runtime(), self.keyboard.runtime()]
+    pub(crate) fn module_devices_locked(&self, g: &Inner, info: &DevInfo) -> Vec<ModuleRuntime> {
+        vec![
+            goxlr_runtime(self.health_status(g), g, self.simulated(), info),
+            self.mouse.runtime(),
+            self.keyboard.runtime(),
+            self.logitech.runtime(),
+            self.gamepad.runtime(),
+            self.netcard.runtime(),
+            self.roccat.runtime(),
+        ]
     }
 
     pub fn modules_snapshot(&self) -> Value {
@@ -85,6 +93,22 @@ impl Ctl {
                 let data = self.keyboard.state();
                 Ok(json!({"module":module,"device":self.keyboard.runtime(),"state":data["state"],"v":data["v"],"meta":{},"live":{}}))
             }
+            crate::logitech::ID => {
+                let data = self.logitech.state();
+                Ok(json!({"module":module,"device":self.logitech.runtime(),"state":data["state"],"v":data["v"],"meta":{},"live":{}}))
+            }
+            crate::gamepad::ID => {
+                let data = self.gamepad.state();
+                Ok(json!({"module":module,"device":self.gamepad.runtime(),"state":data["state"],"v":data["v"],"meta":{},"live":{}}))
+            }
+            crate::netcard::ID => {
+                let data = self.netcard.state();
+                Ok(json!({"module":module,"device":self.netcard.runtime(),"state":data["state"],"v":data["v"],"meta":{},"live":{}}))
+            }
+            crate::roccat::ID => {
+                let data = self.roccat.state();
+                Ok(json!({"module":module,"device":self.roccat.runtime(),"state":data["state"],"v":data["v"],"meta":{},"live":{}}))
+            }
             _ => Err(unknown_module(id)),
         }
     }
@@ -99,6 +123,10 @@ impl Ctl {
             "goxlr-mini" => self.act(action, p),
             "attack-shark-r5-ultra" => self.mouse.command(action, p).map_err(|msg| ApiError { status: 400, msg }),
             crate::keyboard::ID => self.keyboard.command(action, p).map_err(|msg| ApiError { status: 400, msg }),
+            crate::logitech::ID => self.logitech.command(action, p).map_err(|msg| ApiError { status: 400, msg }),
+            crate::gamepad::ID => self.gamepad.command(action, p).map_err(|msg| ApiError { status: 400, msg }),
+            crate::netcard::ID => self.netcard.command(action, p).map_err(|msg| ApiError { status: 400, msg }),
+            crate::roccat::ID => self.roccat.command(action, p).map_err(|msg| ApiError { status: 400, msg }),
             _ => Err(unknown_module(id)),
         }
     }

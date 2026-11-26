@@ -7,6 +7,7 @@ mod colour;
 #[cfg(any(windows, unix))]
 mod desktop;
 #[cfg(any(windows, unix))]
+mod extra_devices;
 mod goxlr;
 #[cfg(any(windows, unix))]
 mod keyboard;

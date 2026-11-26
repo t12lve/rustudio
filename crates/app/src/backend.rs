@@ -137,6 +137,10 @@ pub struct Client {
     mixer_visible: Arc<AtomicBool>,
     mouse_visible: Arc<AtomicBool>,
     keyboard_visible: Arc<AtomicBool>,
+    /// Module « extra » actuellement affiché (souris Logitech, ROCCAT, manette, réseau) ; None = pause.
+    extra_module: Arc<Mutex<Option<String>>>,
+    /// Drapeau levé par le bouton « Actualiser » pour forcer une relecture immédiate.
+    extra_kick: Arc<AtomicBool>,
     go_visible: Arc<AtomicBool>,
     audio_visible: Arc<AtomicBool>,
     level_visible: Arc<AtomicBool>,
@@ -159,6 +163,8 @@ impl Client {
             mixer_visible: Arc::new(AtomicBool::new(false)),
             mouse_visible: Arc::new(AtomicBool::new(false)),
             keyboard_visible: Arc::new(AtomicBool::new(false)),
+            extra_module: Arc::new(Mutex::new(None)),
+            extra_kick: Arc::new(AtomicBool::new(false)),
             go_visible: Arc::new(AtomicBool::new(false)),
             audio_visible: Arc::new(AtomicBool::new(false)),
             level_visible: Arc::new(AtomicBool::new(false)),
@@ -250,6 +256,17 @@ impl Client {
     }
     pub fn set_keyboard_visible(&self, visible: bool) {
         self.keyboard_visible.store(visible, Ordering::Relaxed);
+    }
+
+    pub fn set_extra_visible(&self, module: Option<&str>) {
+        *self.extra_module.lock().unwrap() = module.map(str::to_owned);
+    }
+    pub fn kick_extra(&self) {
+        self.extra_kick.store(true, Ordering::Relaxed);
+    }
+    /// État complet d'un module : GET /api/modules/{id}/state.
+    pub(crate) fn module_state(&self, module: &str) -> Result<Value, String> {
+        self.get(&format!("/api/modules{module}/state"))
     }
 
     pub fn keyboard_view(&self) -> Result<crate::keyboard::KeyboardView, String> {
@@ -620,6 +637,8 @@ pub enum Event {
     Inventory(Option<Inventory>),
     Mouse(Option<crate::mouse::MouseView>),
     Keyboard(Option<crate::keyboard::KeyboardView>),
+    /// Module « extra » (fusion goxlr-ui) : (espace API, réponse /state ou None si illisible).
+    Extra(String, Option<Value>),
     Go(Option<crate::goxlr::GoView>),
     Audio(Value),
     MicOsd(String),
@@ -646,7 +665,25 @@ pub fn start(
         let mut last = None;
         let mut last_go = None;
         let mut last_keyboard = None;
+        let mut last_extra: Option<(String, Option<u64>)> = None;
+        let mut last_extra_read = std::time::Instant::now();
         while !mouse_tx.is_closed() {
+            // modules « extra » (fusion goxlr-ui) : relecture périodique + bouton « Actualiser »
+            let extra_module = mouse_client.extra_module.lock().unwrap().clone();
+            let kick = mouse_client.extra_kick.swap(false, Ordering::Relaxed);
+            if let Some(module) = extra_module {
+                if kick || last_extra.as_ref().is_none_or(|(m, _)| m != &module) || last_extra_read.elapsed() >= Duration::from_secs(3) {
+                    let current = mouse_client.module_state(&module).ok();
+                    let key = (module.clone(), current.as_ref().and_then(|v| v.get("v").and_then(|v| v.as_u64())));
+                    last_extra_read = std::time::Instant::now();
+                    if kick || last_extra.as_ref() != Some(&key) {
+                        last_extra = Some(key);
+                        if mouse_tx.send_blocking(Event::Extra(module, current)).is_err() {
+                            break;
+                        }
+                    }
+                }
+            }
             if mouse_client.keyboard_visible.load(Ordering::Relaxed) {
                 let current = mouse_client.keyboard_view().ok();
                 if current != last_keyboard {

@@ -1,0 +1,13 @@
+[package]
+name = "rustudio-roccat-vulcan"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Clavier ROCCAT Vulcan 120 AIMO (USB 1E7D:3098) : éclairage RGB en HID brut, et simulateur"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+hidapi = { version = "2.6", default-features = false, features = ["windows-native"] }

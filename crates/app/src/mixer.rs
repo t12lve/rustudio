@@ -44,6 +44,7 @@ pub struct Mixer {
     pub(crate) page: Page,
     pub(crate) mouse: crate::mouse::MousePage,
     pub(crate) keyboard: crate::keyboard::KeyboardPage,
+    pub(crate) extra: crate::extra_devices::ExtraPage,
     pub(crate) macros: crate::macros::Editor,
     pub(crate) mouse_focus: Vec<FocusHandle>,
     pub(crate) go: crate::goxlr::GoPage,
@@ -188,6 +189,7 @@ impl Mixer {
             usage: Default::default(),
             perf: Default::default(),
             mouse: crate::mouse::MousePage::default(),
+            extra: crate::extra_devices::ExtraPage::default(),
             keyboard: crate::keyboard::KeyboardPage::default(),
             macros: crate::macros::Editor::new(store.dir().join("macros"), cx),
             mouse_focus: (0..12).map(|_| cx.focus_handle()).collect(),
@@ -330,6 +332,7 @@ impl Mixer {
         self.client.set_mixer_visible(page == Page::Mixer);
         self.client.set_mouse_visible(page.is_mouse());
         self.client.set_keyboard_visible(page.is_keyboard());
+        self.client.set_extra_visible(crate::extra_devices::extra_module(page));
         self.client.set_go_visible(matches!(page, Page::Go(_)));
         self.client.set_level_visible(page == Page::Go(crate::goxlr::Section::Microphone));
         self.client.set_latency_visible(page == Page::Go(crate::goxlr::Section::Diagnostic));
@@ -423,6 +426,10 @@ impl Mixer {
             Event::Keyboard(view) => {
                 self.keyboard.receive(view);
                 force_render = self.page.is_keyboard();
+            }
+            Event::Extra(module, view) => {
+                self.extra.receive(&module, view);
+                force_render = crate::extra_devices::extra_module(self.page).is_some_and(|m| m.ends_with(&module));
             }
             Event::Done(seq, result) => {
                 if self.profile_request == Some(seq) {

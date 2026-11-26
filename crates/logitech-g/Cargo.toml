@@ -1,0 +1,13 @@
+[package]
+name = "rustudio-logitech-g"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Souris Logitech G via récepteur LIGHTSPEED/Unifying (protocole HID++) et simulateur"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+hidapi = { version = "2.6", default-features = false, features = ["windows-native"] }

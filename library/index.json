@@ -116,6 +116,91 @@
         "Contraste",
         "Entrée vidéo"
       ]
+    },
+    {
+      "id": "logitech-g",
+      "name": "Souris Logitech G",
+      "vendor": "Logitech",
+      "kind": "mouse",
+      "status": "community",
+      "builtin": true,
+      "usb": [
+        {
+          "vid": "046D",
+          "pid": "C547"
+        }
+      ],
+      "source": "crates/logitech-g",
+      "summary": "DPI, fréquence d’interrogation, batterie et nom de la souris via le récepteur LIGHTSPEED/Unifying (HID++). Validé sur simulateur.",
+      "features": [
+        "DPI",
+        "Fréquence",
+        "Batterie",
+        "Nom de l’appareil"
+      ],
+      "author": "t12lve",
+      "review_pr": null
+    },
+    {
+      "id": "roccat-vulcan-120-aimo",
+      "name": "Vulcan 120 AIMO",
+      "vendor": "ROCCAT",
+      "kind": "keyboard",
+      "status": "community",
+      "builtin": true,
+      "usb": [
+        {
+          "vid": "1E7D",
+          "pid": "3098"
+        }
+      ],
+      "source": "crates/roccat-vulcan",
+      "summary": "Éclairage du clavier ROCCAT Vulcan 120 AIMO : effet, luminosité, vitesse, couleur. Validé sur simulateur.",
+      "features": [
+        "Effets lumineux",
+        "Luminosité",
+        "Vitesse",
+        "Couleur"
+      ],
+      "author": "t12lve",
+      "review_pr": null
+    },
+    {
+      "id": "gamepad-xinput",
+      "name": "Manette (XInput)",
+      "vendor": "Microsoft",
+      "kind": "other",
+      "status": "community",
+      "builtin": true,
+      "usb": [],
+      "source": "crates/gamepad",
+      "summary": "État des manettes XInput : connexion, batterie, boutons en direct et test de vibration. Validé sur simulateur.",
+      "features": [
+        "État des 4 slots",
+        "Batterie",
+        "Vibration"
+      ],
+      "author": "t12lve",
+      "review_pr": null
+    },
+    {
+      "id": "netcard",
+      "name": "Cartes réseau",
+      "vendor": "Windows",
+      "kind": "other",
+      "status": "community",
+      "builtin": true,
+      "usb": [],
+      "source": "crates/netcard",
+      "summary": "État des cartes réseau (MAC, IP, DNS, DHCP, vitesse, état) et actions activer/désactiver/renouveler. Validé sur simulateur.",
+      "features": [
+        "Liste des cartes",
+        "IP / DNS / DHCP",
+        "Activer / désactiver",
+        "Renouveler DHCP"
+      ],
+      "author": "t12lve",
+      "review_pr": null
     }
   ]
 }
